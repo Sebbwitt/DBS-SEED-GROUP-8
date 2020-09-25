@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -29,7 +30,7 @@ class Login extends React.Component {
                 localStorage.setItem('token', response);
                 window.location.href = '/';
             }).catch(error => {
-                alert('Invalid Username or Password');
+                this.state.hasError = true;
             })
         event.preventDefault();
     }
@@ -40,7 +41,9 @@ class Login extends React.Component {
             <div>
 
                 <h1>Login</h1>
+                {this.state.error && <h3>Error! Invalid username and password.</h3>}
                 <form onSubmit={this.handleSubmit}>
+                    
                     <label>
                         Username:
                         <input type='text' name='username' value={this.state.username} onChange={this.handleUsername} />
@@ -51,7 +54,9 @@ class Login extends React.Component {
                         <input type='password' name='password' value={this.state.password} onChange={this.handlePassword} />
                     </label>
                     <br/>
-                    <input type='submit' value='Login'></input>
+                    <button variant='primary' type='submit'>
+                        Submit
+                    </button>
                 </form>
             </div>
         )

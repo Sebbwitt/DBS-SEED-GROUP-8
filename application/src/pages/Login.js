@@ -28,7 +28,7 @@ class Login extends React.Component {
         axios.post('http://techtrek2020.ap-southeast-1.elasticbeanstalk.com/login', this.state)
             .then(response => {
                 localStorage.setItem('token', response);
-                window.location.href = '/';
+                window.location.href = '/home';
             }).catch(error => {
                 this.setState({
                     hasError: true

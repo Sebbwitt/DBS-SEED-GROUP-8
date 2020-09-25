@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom";
 
+const storage = window.localStorage;
 
 const Navbar = () => {
     return (
@@ -33,7 +34,8 @@ const Navbar = () => {
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     {/* <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" /> */}
-                    <button class="btn btn-outline-danger my-2 my-sm-0" > <Link  to="/">Login Now!</Link></button>
+                    {storage.getItem("token")== null ? <button class="btn btn-outline-danger my-2 my-sm-0" > <Link  to="/">Login Now!</Link></button> : null}
+                    {storage.getItem("token")!= null ? <button class="btn btn-outline-danger my-2 my-sm-0" > <Link  to="/">Logout</Link></button> : null}
                 </form>
             </div>
         </nav>

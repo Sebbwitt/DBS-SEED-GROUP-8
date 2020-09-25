@@ -4,7 +4,11 @@ import axios from 'axios';
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: ''}
+        this.state = {
+            username: '',
+            password: '',
+            hasError: false
+        }
 
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -22,8 +26,8 @@ class Login extends React.Component {
     handleSubmit(event) {
         axios.post('http://techtrek2020.ap-southeast-1.elasticbeanstalk.com/login', this.state)
             .then(response => {
-                console.log(response);
-                alert(response);
+                localStorage.setItem('token', response);
+                window.location.href = '/';
             }).catch(error => {
                 alert('Invalid Username or Password');
             })
@@ -34,6 +38,7 @@ class Login extends React.Component {
         console.log('aa')
         return (
             <div>
+
                 <h1>Login</h1>
                 <form onSubmit={this.handleSubmit}>
                     <label>

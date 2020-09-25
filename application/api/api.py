@@ -23,10 +23,9 @@ def test():
 
     return jsonify({"result" : output}) 
 
-@api.route("/customerBase")
+@api.route("/customerbase")
 def check_customer_exist(): 
     nric = request.args.get('nric')
-    nric = nric[1:-1]
     check = database.find({'NRIC' : nric})
     customer_details = {}
     if check:

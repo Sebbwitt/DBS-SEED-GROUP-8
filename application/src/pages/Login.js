@@ -13,15 +13,15 @@ class Login extends React.Component {
 
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);       
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleUsername(event)  {
-        this.setState({username: event.target.value});
+    handleUsername(event) {
+        this.setState({ username: event.target.value });
     }
 
-    handlePassword(event)  {
-        this.setState({password: event.target.value});
+    handlePassword(event) {
+        this.setState({ password: event.target.value });
     }
 
     handleSubmit(event) {
@@ -40,25 +40,31 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <h1>Login</h1>
+                <br></br>
+                <br></br>
+                <h1 class="text-center">Login</h1>
                 <Alert variant="danger" show={this.state.hasError}>
                     <Alert.Heading>Error!</Alert.Heading>
                     Invalid username and password.
                 </Alert>
 
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Group>
-                        <Form.Label>Username:</Form.Label>
-                        <Form.Control type='text' name='username' value={this.state.username} onChange={this.handleUsername} required />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Password:</Form.Label>
-                        <Form.Control type='password' name='password' value={this.state.password} onChange={this.handlePassword} required />
-                    </Form.Group>
-                    <Button variant='primary' type='submit'>
-                        Submit
+                <div class="wrapper fadeInDown">
+                    <div id="formContent">
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Group>
+                                <Form.Label>Username:</Form.Label>
+                                <Form.Control type='text' name='username' value={this.state.username} onChange={this.handleUsername} required />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Password:</Form.Label>
+                                <Form.Control type='password' name='password' value={this.state.password} onChange={this.handlePassword} required />
+                            </Form.Group>
+                            <Button variant='primary' type='submit'>
+                                Submit
                     </Button>
-                </Form>
+                        </Form>
+                    </div>
+                </div>
             </div>
         )
     }

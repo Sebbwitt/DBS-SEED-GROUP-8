@@ -22,7 +22,7 @@ const SignUpForm = () => {
         axios.get(`/customerbase?nric=${nric}`).then(
             res => {
                 if (res.data.length != 0) {
-
+                    setCustomer(res.data);
                 }
             }
         ).catch(

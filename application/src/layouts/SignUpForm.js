@@ -10,16 +10,20 @@ const SignUpForm = () => {
         firstname: "",
         lastname: "",
         age: 18,
-        branchcode: 1,
+        branchcode: "001",
         products:["","","","",""]
     });
+
+    const [error, hasError] = useState(false);
+
     const branchCodes = [1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,36,37,38,47,48,49,50,51,52,53,54,55,56,57,60,61,62,63,64,65,66,67,69,70,72,74,81,82,96,98,100,104,105,106,107,109,110,113,118,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,254,257,259,287,288,289,347,363,390,391]
     const _handleCheckDraftExist = (e) => {
         e.preventDefault();
         axios.get(`/customerbase?nric=${nric}`).then(
             res => {
-                console.log(res.data);
-                // setCustomer();
+                if (res.data.length != 0) {
+
+                }
             }
         ).catch(
             err => {
@@ -34,8 +38,28 @@ const SignUpForm = () => {
 
     const _handleSignUp = (e) => {
         e.preventDefault();
-        // console.log(customer.products);
-        console.log(customer.products);
+        if (!branchCodes.contains(customer.branchcode)) {
+            hasError(true);
+        }
+
+        while (customer.products.contains("")) {
+            customer.products.unshift("",1);
+        }
+        
+        const date =  new Date();
+
+        if (!hasError) {
+            axios.post("/addsignup", {...customer, date}).then(
+                res => {
+                    console.log("ok");
+                }
+            ).catch(
+                err => {
+                    console.log(err.message);
+                }
+            )
+        }
+
     }
 
     const classes = useStyles();
@@ -112,34 +136,29 @@ const SignUpForm = () => {
                     defaultValue={customer?  "0".repeat(3-customer.branchcode.toString().length) + customer.branchcode.toString(): "001"}
                     inputProps={{pattern:"[0-9]{3}"}}
                     className={classes.textField}
-                    onChange={e => setCustomer({...customer, branchcode: e.target.value})}
+                    onChange={e => setCustomer({...customer, branchcode: "0".repeat(3-e.target.value.toString().length) + e.target.value.toString()})}
                 /><br/>
                 Products:<br/>
                 137 : Investor <Checkbox
                     name="products[]"
                     value="Investor"
                     onChange={e=> e.target.checked? customer.products[0] = e.target.value : customer.products[0] = ""}
-                    // onChange={e => setCustomer({...customer, products: e.target.checked? customer.products.splice(customer.products.indexOf(e.target.value),1): customer.products.push(e.target.value)})}
                 />|
                 070 : Insurance <Checkbox
                     value="Insurance"
                     onChange={e=> e.target.checked? customer.products[1] = e.target.value : customer.products[1] = ""}
-                    // onChange={e => setCustomer({...customer, products: e.target.checked? customer.products.splice(customer.products.indexOf(e.target.value),1): customer.products.push(e.target.value)})}
                 />|
                 291 : Loans <Checkbox
                     value="Loans"
                     onChange={e=> e.target.checked? customer.products[2] = e.target.value : customer.products[2] = ""}
-                    // onChange={e => setCustomer({...customer, products: e.target.checked? customer.products.splice(customer.products.indexOf(e.target.value),1): customer.products.push(e.target.value)})}
                 />|
                 969 : Savings <Checkbox
                     value="Savings"
-                    onChange={e=> e.target.checked? customer.products[3] = e.target.value : customer.products[3] = ""}
-                    // onChange={e => setCustomer({...customer, products: e.target.checked? customer.products.splice(customer.products.indexOf(e.target.value),1): customer.products.push(e.target.value)})}
-                />|
+                    onChange={e=> e.target.checked? customer.products[3] = e.target.value : customer.products[3] = ""} 
+                    />|
                 555 : Credit Cards <Checkbox
                     value="Credit Cards"
                     onChange={e=> e.target.checked? customer.products[4] = e.target.value : customer.products[4] = ""}
-                    // onChange={e => setCustomer({...customer, products: e.target.checked? customer.products.splice(customer.products.indexOf(e.target.value),1): customer.products.push(e.target.value)})}
                 />|
                 <br/>
                 <Button variant="contained" color="primary" type="submit">Submit</Button>

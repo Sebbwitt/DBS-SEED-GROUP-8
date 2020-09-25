@@ -4,6 +4,11 @@ import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-ro
 const storage = window.localStorage;
 
 const Navbar = () => {
+    function logout() {
+        window.localStorage.removeItem('token');
+        window.location.href = '/about';
+    }
+
     return (
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -15,10 +20,10 @@ const Navbar = () => {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                    <Link className="nav-link" to="/">Home</Link>
+                    <Link className="nav-link" to="/home">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">About Us</Link>
+                        <Link className="nav-link" to="/about">About Us</Link>
                     </li>
                     {/* <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,8 +39,8 @@ const Navbar = () => {
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     {/* <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" /> */}
-                    {storage.getItem("token")== null ? <button class="btn btn-outline-danger my-2 my-sm-0" > <Link  to="/">Login Now!</Link></button> : null}
-                    {storage.getItem("token")!= null ? <button class="btn btn-outline-danger my-2 my-sm-0" > <Link  to="/">Logout</Link></button> : null}
+                    {window.localStorage.getItem('token')== null ? <button class="btn btn-outline-danger my-2 my-sm-0" > <Link  to="/login">Login Now!</Link></button> : null}
+                    {window.localStorage.getItem('token')!= null ? <button class="btn btn-outline-danger my-2 my-sm-0" onClick={() => logout()}> Logout</button> : null}
                 </form>
             </div>
         </nav>

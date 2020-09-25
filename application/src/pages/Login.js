@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -27,32 +28,37 @@ class Login extends React.Component {
         axios.post('http://techtrek2020.ap-southeast-1.elasticbeanstalk.com/login', this.state)
             .then(response => {
                 localStorage.setItem('token', response);
-                window.location.href = '/';
+                window.location.href = '/home';
             }).catch(error => {
-                alert('Invalid Username or Password');
+                this.setState({
+                    hasError: true
+                })
             })
         event.preventDefault();
     }
 
     render() {
-        console.log('aa')
         return (
             <div>
-
                 <h1>Login</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Username:
-                        <input type='text' name='username' value={this.state.username} onChange={this.handleUsername} />
-                    </label>
-                    <br/>
-                    <label>
-                        Password: 
-                        <input type='password' name='password' value={this.state.password} onChange={this.handlePassword} />
-                    </label>
-                    <br/>
-                    <input type='submit' value='Login'></input>
-                </form>
+                <Alert variant="danger" show={this.state.hasError}>
+                    <Alert.Heading>Error!</Alert.Heading>
+                    Invalid username and password.
+                </Alert>
+
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Group>
+                        <Form.Label>Username:</Form.Label>
+                        <Form.Control type='text' name='username' value={this.state.username} onChange={this.handleUsername} required />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control type='password' name='password' value={this.state.password} onChange={this.handlePassword} required />
+                    </Form.Group>
+                    <Button variant='primary' type='submit'>
+                        Submit
+                    </Button>
+                </Form>
             </div>
         )
     }

@@ -7,6 +7,9 @@ import Home from "pages/Home";
 import About from "pages/About";
 import Login from "pages/Login";
 
+import Navbar from "layouts/Navbar";
+import Footer from "layouts/Footer";
+
 function App() {
 	return (
 		<Router>
